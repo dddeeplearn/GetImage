@@ -240,7 +240,20 @@ namespace GetImage
             {
                 if (!Directory.Exists(save_path))
                     Directory.CreateDirectory(save_path);
+                string[] files = Directory.GetFiles(save_path);
+                if (files.Length >= 5000)
+                {
+                    // 通过UI日志告知用户正在进行清理操作
+                    SafeUpdateUI($"文件夹中文件数量达到 {files.Length} 个，超过5000个上限，正在清空文件夹...");
 
+                    // 步骤 3: 如果超限，遍历并删除所有文件
+                    foreach (string file in files)
+                    {
+                        File.Delete(file);
+                    }
+
+                    SafeUpdateUI("文件夹已清空完毕。");
+                }
                 string fullPath = Path.Combine(save_path, filename);
                 File.WriteAllBytes(fullPath, imageData);
             }

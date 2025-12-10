@@ -92,9 +92,10 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(37, 152);
+            textBox1.Location = new Point(37, 150);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
+            textBox1.ScrollBars = ScrollBars.Vertical;
             textBox1.Size = new Size(558, 299);
             textBox1.TabIndex = 6;
             // 
