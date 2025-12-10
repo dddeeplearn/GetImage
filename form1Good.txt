@@ -39,15 +39,11 @@ namespace GetImage
             InitializeComponent();
             server_ip.Text="10.26.145.50";
             server_port.Text="7768";
-            _reconnectTimer = new System.Windows.Forms.Timer();
-            _reconnectTimer.Interval = 60000; // 1分钟
-            _reconnectTimer.Tick += ReconnectTimer_Tick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SafeUpdateUI("程序启动，开始自动连接...");
-            AttemptConnect();
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -57,66 +53,53 @@ namespace GetImage
 
         private void connect_button_Click(object sender, EventArgs e)
         {
-            if (_tcpClient != null && _tcpClient.Connected)
+            if (_tcpClient == null || !_tcpClient.Connected)
             {
-                // 用户主动断开连接
-                SafeUpdateUI("用户手动断开连接。");
-                _isUserDisconnect = true; // 标记为用户主动断开
-                _reconnectTimer.Stop(); // 停止自动重连
-                CleanupConnection();
+                // 连接操作
+                string serverIP = server_ip.Text.Trim();
+                int port = int.Parse(server_port.Text.Trim());
+
+                try
+                {
+                    _tcpClient = new TcpClient();
+                    _tcpClient.Connect(serverIP, port);
+                    _networkStream = _tcpClient.GetStream();
+
+                    _isReceiving = true;
+                    _receiveThread = new Thread(new ThreadStart(ReceiveImageData));
+                    _receiveThread.IsBackground = true;
+                    _receiveThread.Start();
+
+                    connect_button.Text = "断开连接";
+                    SafeUpdateUI($"已连接到开发板 {serverIP}:{port}");
+                }
+                catch (Exception ex)
+                {
+                    SafeUpdateUI($"连接失败: {ex.Message}");
+                    if (_tcpClient != null) _tcpClient.Close();
+                    _tcpClient = null;
+                }
             }
             else
             {
-                // 用户手动连接
-                SafeUpdateUI("正在手动连接...");
-                _isUserDisconnect = false; // 清除用户主动断开标记
-                _reconnectTimer.Stop(); // 先停止计时器，立即尝试连接
-                AttemptConnect();
+                // 断开连接操作
+                _isReceiving = false;
+
+                if (_receiveThread != null && _receiveThread.IsAlive)
+                    _receiveThread.Join(1000); // 等待接收线程结束
+
+                _networkStream?.Close();
+                _tcpClient?.Close();
+
+                connect_button.Text = "连接";
+                SafeUpdateUI("已断开与开发板的连接");
             }
         }
-        private void AttemptConnect()
-        {
-            if (_tcpClient != null && _tcpClient.Connected) return; // 如果已经连接，则不执行任何操作
-
-            string serverIP = server_ip.Text.Trim();
-            int port = int.Parse(server_port.Text.Trim());
-
-            try
-            {
-                CleanupConnection(); // 连接前先确保清理了旧的资源
-
-                _tcpClient = new TcpClient();
-                // 可以设置一个连接超时，避免UI假死
-                var result = _tcpClient.BeginConnect(serverIP, port, null, null);
-                var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(5));
-
-                if (!success)
-                {
-                    throw new Exception("连接超时。");
-                }
-
-                _tcpClient.EndConnect(result);
-                _networkStream = _tcpClient.GetStream();
-
-                _isReceiving = true;
-                _receiveThread = new Thread(new ThreadStart(ReceiveImageData));
-                _receiveThread.IsBackground = true;
-                _receiveThread.Start();
-
-                SafeUpdateUI($"已成功连接到 {serverIP}:{port}");
-            }
-            catch (Exception ex)
-            {
-                SafeUpdateUI($"连接失败: {ex.Message}");
-                HandleDisconnection(); // 连接失败，处理断开逻辑
-            }
-        }
-
         private void ReceiveImageData()
         {
             byte[] readBuffer = new byte[4096]; // 每次从网络读取的缓冲区
 
-            while (_isReceiving)
+            while (_isReceiving && _tcpClient != null && _tcpClient.Connected)
             {
                 try
                 {
@@ -131,76 +114,36 @@ namespace GetImage
                     else
                     {
                         // 连接已关闭
-                        _isReceiving = false;
                         SafeUpdateUI("开发板断开连接");
-                        this.Invoke(new Action(HandleDisconnection));
+                        _isReceiving = false;
                         break;
                     }
                 }
                 catch (IOException ioEx)
                 {
+                    SafeUpdateUI($"网络错误: {ioEx.Message}");
                     _isReceiving = false;
-                    SafeUpdateUI("网络连接丢失。");
-                    this.Invoke(new Action(HandleDisconnection));
+                    break;
                 }
                 catch (Exception ex)
                 {
                     SafeUpdateUI($"接收错误: {ex.Message}");
                     _isReceiving = false;
-                    this.Invoke(new Action(HandleDisconnection));
                     break;
                 }
             }
 
             // 清理资源
-            //if (_tcpClient != null)
-            //{
-            //    _networkStream?.Close();
-            //    _tcpClient.Close();
-
-            //    // 更新UI（回到主线程）
-            //    this.Invoke(new Action(() => { connect_button.Text = "连接"; }));
-            //}
-        }
-        private void HandleDisconnection()
-        {
-            CleanupConnection();
-            if (!_isUserDisconnect) // 如果不是用户主动断开，则启动自动重连
+            if (_tcpClient != null)
             {
-                SafeUpdateUI("将在1分钟后尝试自动重连...");
-                _reconnectTimer.Start();
+                _networkStream?.Close();
+                _tcpClient.Close();
+
+                // 更新UI（回到主线程）
+                this.Invoke(new Action(() => { connect_button.Text = "连接"; }));
             }
         }
-        private void CleanupConnection()
-        {
-            _isReceiving = false;
 
-            // 等待接收线程安全退出
-            if (_receiveThread != null && _receiveThread.IsAlive)
-            {
-                _receiveThread.Join(500);
-            }
-
-            _networkStream?.Close();
-            _tcpClient?.Close();
-            _tcpClient = null;
-
-            // 在UI线程上更新UI状态
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action(() => connect_button.Text = "连接"));
-            }
-            else
-            {
-                connect_button.Text = "连接";
-            }
-        }
-        private void ReconnectTimer_Tick(object sender, EventArgs e)
-        {
-            _reconnectTimer.Stop(); // 先停止计时，避免在连接过程中重复触发
-            SafeUpdateUI("自动重连计时结束，尝试重新连接...");
-            AttemptConnect();
-        }
         // 处理接收到的数据（协议解析核心）
         private void ProcessReceivedData(byte[] buffer, int bytesRead)
         {

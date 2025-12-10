@@ -1,4 +1,4 @@
-import socket
+﻿import socket
 import struct
 import time
 import os
@@ -8,7 +8,7 @@ import configparser
 
 
 class ImageServer:
-    def __init__(self, host='0.0.0.0', port=8888):
+    def __init__(self, host='0.0.0.0', port=7768):
         self.host = host
         self.port = port
         self.server_socket = None
@@ -23,7 +23,7 @@ class ImageServer:
         try:
             config = configparser.ConfigParser()
             config.read(self.config_file)
-            # 假设配置文件格式：
+            # 配置文件格式：
             # [Detection]
             # detectsign = 1
             detectsign = config.getint('Detection', 'detectsign')
