@@ -1,7 +1,7 @@
 ﻿#原tv7
 #功能包含：
 #重启
-#
+#新转换角度
 import json
 import os.path
 import socket
@@ -63,15 +63,15 @@ def angle_out(framecap,dkernel):
     edge_pos = nonzero(c1)
     line_pos = cv2.hconcat([edge_pos[0], edge_pos[1]])
     if line_pos is not None:
-        [vx, vy, _, _] = cv2.fitLine(line_pos, cv2.DIST_L2, 0, 0.01, 0.01)
+        [vx, vy, _, _] = cv2.fitLine(line_pos, cv2.DIST_L1, 0, 0.01, 0.01)
     else:
         vx = None
         vy = None
     if vx != 0 and (vx is not None):
-        angleor =90*vy/abs(vy)-np.arctan(vy / vx) * 180 / np.pi
+        # angleor =90*vy/abs(vy)-np.arctan(vy / vx) * 180 / np.pi
+        # alarmcode = '1'
+        angleor=get_stable_angle(vx, vy)
         alarmcode = '1'
-        #angleor=get_stable_angle(vx, vy)
-        #alarmcode = '1'
     elif vx is None:
         angleor = 0.0
         alarmcode = '2'
