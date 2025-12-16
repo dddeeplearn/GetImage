@@ -47,25 +47,29 @@ def angle_out(framecap,dkernel):
     edges = cv2.Canny(frame_array, 50, 150)
     dilated = cv2.dilate(edges, dkernel, iterations=1)
     skeleton = skeletonize(dilated > 0)
+    skeleton_display = skeleton.astype(np.uint8) * 255
     #skeleton = skeletonize(binary)
     #c1 = skeleton.astype(np.uint8) * 255
     # contours, _ = cv2.findContours(c1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    edge_pos = nonzero(skeleton)
-    line_pos = cv2.hconcat([edge_pos[0], edge_pos[1]])
-    if line_pos is not None:
-        [vx, vy, _, _] = cv2.fitLine(line_pos, cv2.DIST_L1, 0, 0.01, 0.01)
-    else:
-        vx = None
-        vy = None
-    if vx != 0 and (vx is not None):
-        angleor =90*vy/abs(vy)-np.arctan(vy / vx) * 180 / np.pi
+    lines = cv2.HoughLines(skeleton_display, 1, 0.05*np.pi/180, threshold=100)
+    if lines is not None:
+        best_line = lines[0][0]
+        rho, theta = best_line
+        # 转换为角度（0-180度）
+        angleor = np.degrees(theta) % 180 - 90
         alarmcode = '1'
-    elif vx is None:
+    else:
         angleor = 0.0
         alarmcode = '2'
-    else:
-        angleor = 0.0
-        alarmcode = '1'
+    # if vx != 0 and (vx is not None):
+    #     angleor =90*vy/abs(vy)-np.arctan(vy / vx) * 180 / np.pi
+    #     alarmcode = '1'
+    # elif vx is None:
+    #     angleor = 0.0
+    #     alarmcode = '2'
+    # else:
+    #     angleor = 0.0
+    #     alarmcode = '1'
     return angleor,alarmcode
 #######angle detect#########
 
