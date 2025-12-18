@@ -87,44 +87,33 @@ class ImageServer:
 
     def check_and_send(self):
         """定期检查detectsign并发送图像"""
-        while self.running:
+        while self.running and self.client_socket:
             try:
                 # 读取detectsign值
                 detectsign = self.read_detectsign()
                 print(f"检查detectsign值: {detectsign} (时间: {time.strftime('%Y-%m-%d %H:%M:%S')})")
 
-                if detectsign == 1 and self.client_socket:
+                if detectsign == 1:
                     print("detectsign=1, 开始发送图像...")
                     sent_count = self.send_all_images()
-
-                    # 发送完成标记
                     if sent_count > 0:
                         print(f"图像发送完成，共发送 {sent_count} 张图像")
-
-                        # 发送结束标记
                         self.client_socket.send(struct.pack('!I', 0xFFFFFFFF))
-
-                    # 重置标志位（可选）
-                    # 这里可以添加代码将detectsign重置为0
-
-                # 等待10秒
+                
                 time.sleep(10)
 
+            except (BrokenPipeError, ConnectionResetError) as e:
+                print(f"连接已断开: {e}")
+                break # 跳出循环，让外层去处理重连
             except Exception as e:
                 print(f"检查或发送过程中出错: {e}")
-                if not self.running:
-                    break
+                break # 出现其他错误也断开
 
-                # 如果连接断开，尝试重新连接
-                try:
-                    self.client_socket.close()
-                except:
-                    pass
-
-                # 等待客户端重新连接
-                print("等待客户端重新连接...")
-                self.client_socket, self.client_address = self.server_socket.accept()
-                print(f"重新连接: {self.client_address}")
+        # 清理当前客户端socket
+        if self.client_socket:
+            self.client_socket.close()
+            self.client_socket = None
+        print("当前客户端会话结束。")
 
     def start_server(self):
         """启动服务器"""
@@ -135,21 +124,44 @@ class ImageServer:
 
         print(f"服务器启动在 {self.host}:{self.port}")
         print("等待客户端连接...")
-
-        # 接受客户端连接
-        self.client_socket, self.client_address = self.server_socket.accept()
-        print(f"客户端已连接: {self.client_address}")
-
-        # 启动检查线程
         self.running = True
-        check_thread = threading.Thread(target=self.check_and_send)
-        check_thread.daemon = True
-        check_thread.start()
+        # 接受客户端连接
+        #self.client_socket, self.client_address = self.server_socket.accept()
+        #print(f"客户端已连接: {self.client_address}")
 
-        # 保持主线程运行
         try:
-            while self.running:
-                time.sleep(1)
+            while self.running: # 使用一个循环来处理断线重连
+                print("等待客户端连接...")
+                # 接受客户端连接
+                self.client_socket, self.client_address = self.server_socket.accept()
+                print(f"客户端已连接: {self.client_address}")
+
+                # --- 新增代码: 设置TCP Keep-Alive ---
+                try:
+                    # 1. 开启Keep-Alive功能
+                    self.client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+                    # 2. 设置TCP_KEEPIDLE: 60秒内无数据，则发送心跳
+                    # (注意: TCP_KEEPIDLE, TCP_KEEPINTVL, TCP_KEEPCNT 在非Linux系统上可能不可用)
+                    if hasattr(socket, "TCP_KEEPIDLE"):
+                        self.client_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 60)
+                    # 3. 设置TCP_KEEPINTVL: 心跳包每10秒发送一次
+                    if hasattr(socket, "TCP_KEEPINTVL"):
+                        self.client_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 10)
+                    # 4. 设置TCP_KEEPCNT: 尝试3次心跳包
+                    if hasattr(socket, "TCP_KEEPCNT"):
+                        self.client_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 3)
+                    print("TCP Keep-Alive 已为当前连接启用。")
+                except Exception as e:
+                    print(f"警告: 设置TCP Keep-Alive失败 (当前系统可能不支持): {e}")
+                # --- 新增代码结束 ---
+
+                # 启动检查线程
+                self.check_and_send()
+
+        # # 保持主线程运行
+        # try:
+        #     while self.running:
+        #         time.sleep(1)
         except KeyboardInterrupt:
             print("\n正在关闭服务器...")
         finally:

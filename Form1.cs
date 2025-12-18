@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Net.Sockets;
 using System.Text;
@@ -34,10 +35,14 @@ namespace GetImage
         private int _expectedDataSize = 0;
         private string _currentFilename = "";
         private delegate void SafeUpdateUIDelegate(string message, byte[] imageData = null);
+        private TcpListener _imageServer = null;
+        private Thread _serverListenThread = null;
+        private volatile bool _isServerRunning = false;
+        private const int BACKUP_PORT = 7772; // 定义备份端口
         public Form1()
         {
             InitializeComponent();
-            server_ip.Text="10.26.145.50";
+            server_ip.Text="192.168.2.101";
             server_port.Text="7768";
             _reconnectTimer = new System.Windows.Forms.Timer();
             _reconnectTimer.Interval = 60000; // 1分钟
@@ -48,8 +53,128 @@ namespace GetImage
         {
             SafeUpdateUI("程序启动，开始自动连接...");
             AttemptConnect();
+            StartImageBackupServer();
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StopImageBackupServer();
         }
 
+        private void StartImageBackupServer()
+        {
+            if (_isServerRunning) return;
+
+            _isServerRunning = true;
+            _serverListenThread = new Thread(new ThreadStart(ListenForBackupClients));
+            _serverListenThread.IsBackground = true;
+            _serverListenThread.Start();
+            SafeUpdateUI($"图片备份服务器已在端口 {BACKUP_PORT} 启动。");
+        }
+        private void StopImageBackupServer()
+        {
+            if (!_isServerRunning) return;
+
+            _isServerRunning = false;
+            _imageServer?.Stop(); 
+            _serverListenThread?.Join(500); 
+        }
+        private void ListenForBackupClients()
+        {
+            try
+            {
+                _imageServer = new TcpListener(IPAddress.Any, BACKUP_PORT);
+                _imageServer.Start();
+
+                while (_isServerRunning)
+                {
+                    try
+                    {
+                        // 阻塞，直到有备份客户端连接进来
+                        TcpClient backupClient = _imageServer.AcceptTcpClient();
+                        SafeUpdateUI($"备份客户端已连接: {((IPEndPoint)backupClient.Client.RemoteEndPoint).Address}");
+
+                        // 为每个连接的客户端创建一个新线程来处理文件发送，避免阻塞主监听线程
+                        Thread clientHandlerThread = new Thread(() => HandleBackupRequest(backupClient));
+                        clientHandlerThread.IsBackground = true;
+                        clientHandlerThread.Start();
+                    }
+                    catch (SocketException)
+                    {
+                        // 当调用_imageServer.Stop()时会触发此异常，是正常关闭流程的一部分
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SafeUpdateUI($"备份服务器启动失败: {ex.Message}");
+            }
+        }
+        private void HandleBackupRequest(TcpClient client)
+        {
+            try
+            {
+                using (var stream = client.GetStream())
+                {
+                    if (!Directory.Exists(save_path))
+                    {
+                        SafeUpdateUI("图片存储文件夹不存在，无法执行备份。");
+                        return;
+                    }
+
+                    string[] imageFiles = Directory.GetFiles(save_path);
+                    if (imageFiles.Length == 0)
+                    {
+                        SafeUpdateUI("文件夹为空，无需备份。");
+                        stream.Write(BitConverter.GetBytes(0), 0, 4); // 发送结束信号
+                        return;
+                    }
+                    SafeUpdateUI($"开始向备份客户端发送 {imageFiles.Length} 张图片...");
+
+                    // 遍历并发送每一张图片
+                    foreach (string filePath in imageFiles)
+                    {
+                        byte[] fileData = File.ReadAllBytes(filePath);
+                        string fileName = Path.GetFileName(filePath);
+                        byte[] fileNameBytes = Encoding.UTF8.GetBytes(fileName);
+
+                        // 协议: 4字节文件名长度 + 文件名 + 8字节文件大小 + 文件内容
+                        stream.Write(BitConverter.GetBytes(fileNameBytes.Length), 0, 4);
+                        stream.Write(fileNameBytes, 0, fileNameBytes.Length);
+                        stream.Write(BitConverter.GetBytes((long)fileData.Length), 0, 8);
+                        stream.Write(fileData, 0, fileData.Length);
+                    }
+
+                    // 发送结束信号 (一个长度为0的文件名)
+                    stream.Write(BitConverter.GetBytes(0), 0, 4);
+                    SafeUpdateUI("所有图片发送完毕。");
+                    SafeUpdateUI("开始清理已备份的图片...");
+                    int deletedCount = 0;
+                    foreach (string filePathToDelete in imageFiles)
+                    {
+                        try
+                        {
+                            File.Delete(filePathToDelete);
+                            deletedCount++;
+                        }
+                        catch (Exception ex)
+                        {
+                            // 如果某个文件删除失败，记录日志并继续尝试删除下一个
+                            SafeUpdateUI($"删除文件 {Path.GetFileName(filePathToDelete)} 失败: {ex.Message}");
+                        }
+                    }
+                    SafeUpdateUI($"清理完成，共删除了 {deletedCount} / {imageFiles.Length} 个文件。");
+                }
+            }
+            catch (Exception ex)
+            {
+                SafeUpdateUI($"向备份客户端发送图片时出错: {ex.Message}");
+            }
+            finally
+            {
+                client.Close();
+            }
+        }
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -93,6 +218,28 @@ namespace GetImage
                 if (!success)
                 {
                     throw new Exception("连接超时。");
+                }
+
+                try
+                {
+                    // C# 设置Keep-Alive需要一个字节数组作为参数
+                    // 结构: [on/off (1/0)], [keepalivetime (ms)], [keepaliveinterval (ms)]
+                    // C#中的单位是毫秒
+                    byte[] keepAliveValues = new byte[12];
+                    // 1. 开启Keep-Alive
+                    BitConverter.GetBytes(1).CopyTo(keepAliveValues, 0);
+                    // 2. 60秒内无数据，则发送心跳
+                    BitConverter.GetBytes(60000).CopyTo(keepAliveValues, 4);
+                    // 3. 心跳包每10秒发送一次
+                    BitConverter.GetBytes(10000).CopyTo(keepAliveValues, 8);
+
+                    // 调用底层IOControl来设置
+                    _tcpClient.Client.IOControl(IOControlCode.KeepAliveValues, keepAliveValues, null);
+                    SafeUpdateUI("客户端 TCP Keep-Alive 已启用。");
+                }
+                catch (Exception ex)
+                {
+                    SafeUpdateUI($"警告: 设置客户端TCP Keep-Alive失败: {ex.Message}");
                 }
 
                 _tcpClient.EndConnect(result);
