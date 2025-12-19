@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 namespace GetImage
 {
-    public partial class Form1 : Form
+    public partial class GetImg : Form
     {
         private TcpClient _tcpClient = null;
         private NetworkStream _networkStream = null;
@@ -39,7 +39,7 @@ namespace GetImage
         private Thread _serverListenThread = null;
         private volatile bool _isServerRunning = false;
         private const int BACKUP_PORT = 7772; // 定义备份端口
-        public Form1()
+        public GetImg()
         {
             InitializeComponent();
             server_ip.Text="192.168.2.101";

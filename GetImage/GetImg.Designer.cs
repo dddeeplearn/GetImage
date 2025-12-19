@@ -1,6 +1,6 @@
 ﻿namespace GetImage
 {
-    partial class Form1
+    partial class GetImg
     {
         /// <summary>
         ///  Required designer variable.
@@ -103,7 +103,7 @@
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(677, 502);
+            ClientSize = new Size(620, 486);
             Controls.Add(textBox1);
             Controls.Add(getimg_button);
             Controls.Add(connect_button);

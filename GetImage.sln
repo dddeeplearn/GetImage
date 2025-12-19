@@ -9,6 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgBackClient", "ImgBackClient\ImgBackClient.csproj", "{E5876ADF-E3D3-4C8F-9083-AFF1E95839ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoardProgram", "BoardProgram", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		BoardProgram\ImgSend2.py = BoardProgram\ImgSend2.py
+		BoardProgram\sendPLCtest_tv15_27.py = BoardProgram\sendPLCtest_tv15_27.py
+		BoardProgram\sendPLCtest_tv15_ReSaveImg.py = BoardProgram\sendPLCtest_tv15_ReSaveImg.py
+		BoardProgram\sendPLCtest_tv16_ReSaveImg.py = BoardProgram\sendPLCtest_tv16_ReSaveImg.py
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

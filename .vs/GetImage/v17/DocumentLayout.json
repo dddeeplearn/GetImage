@@ -3,26 +3,24 @@
   "WorkspaceRootPath": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\DataSave\\Program\\visualstudio\\ImgBackClient\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E5876ADF-E3D3-4C8F-9083-AFF1E95839ED}|ImgBackClient\\ImgBackClient.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\imgbackclient\\imgback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5876ADF-E3D3-4C8F-9083-AFF1E95839ED}|ImgBackClient\\ImgBackClient.csproj|solutionrelative:imgbackclient\\imgback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage.csproj|E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage.csproj|solutionrelative:GetImage\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{E5876ADF-E3D3-4C8F-9083-AFF1E95839ED}|ImgBackClient\\ImgBackClient.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\imgbackclient\\imgback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{E5876ADF-E3D3-4C8F-9083-AFF1E95839ED}|ImgBackClient\\ImgBackClient.csproj|solutionrelative:imgbackclient\\imgback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|e:\\datasave\\program\\visualstudio\\imgbackclient\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\getimage\\getimg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|solutionrelative:getimage\\getimg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\getimage\\getimg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|solutionrelative:getimage\\getimg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\getimage\\form1good.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|solutionrelative:getimage\\form1good.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\getimage\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|solutionrelative:getimage\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|e:\\datasave\\program\\visualstudio\\getsaveimg\\getimage\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D0290403-564C-461A-9298-3F5BF899A2E9}|GetImage\\GetImage.csproj|solutionrelative:getimage\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,79 +38,74 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\ImgBackClient\\Form1.cs",
-              "RelativeDocumentMoniker": "..\\ImgBackClient\\Form1.cs",
-              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\ImgBackClient\\Form1.cs",
-              "RelativeToolTip": "..\\ImgBackClient\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Title": "ImgBack.cs",
+              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\ImgBackClient\\ImgBack.cs",
+              "RelativeDocumentMoniker": "ImgBackClient\\ImgBack.cs",
+              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\ImgBackClient\\ImgBack.cs",
+              "RelativeToolTip": "ImgBackClient\\ImgBack.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T05:32:21.879Z",
+              "WhenOpened": "2025-12-19T02:58:07.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "ImgBack.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\ImgBackClient\\ImgBack.cs",
+              "RelativeDocumentMoniker": "ImgBackClient\\ImgBack.cs",
+              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\ImgBackClient\\ImgBack.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "ImgBackClient\\ImgBack.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-19T02:56:26.508Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GetImg.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\GetImg.cs",
+              "RelativeDocumentMoniker": "GetImage\\GetImg.cs",
+              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\GetImg.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "GetImage\\GetImg.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-19T02:55:29.669Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "form1Good.txt",
               "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\form1Good.txt",
               "RelativeDocumentMoniker": "GetImage\\form1Good.txt",
               "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\form1Good.txt",
               "RelativeToolTip": "GetImage\\form1Good.txt",
-              "ViewState": "AgIAAAwBAAAAAAAAAAA2wCIBAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAPoAAAAAAAAAAAA2wCIBAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-12-10T03:29:06.407Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "README.md",
-              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\README.md",
-              "RelativeDocumentMoniker": "GetImage\\README.md",
-              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\README.md",
-              "RelativeToolTip": "GetImage\\README.md",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-10T02:18:35.481Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\Form1.cs",
-              "RelativeDocumentMoniker": "GetImage\\Form1.cs",
-              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\Form1.cs",
-              "RelativeToolTip": "GetImage\\Form1.cs",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAIwO8AAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T06:37:13.053Z",
+              "WhenOpened": "2025-12-10T03:29:06.407Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form1.cs [\u8BBE\u8BA1]",
-              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\ImgBackClient\\Form1.cs",
-              "RelativeDocumentMoniker": "ImgBackClient\\Form1.cs",
-              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\ImgBackClient\\Form1.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "..\\ImgBackClient\\Form1.cs [\u8BBE\u8BA1]",
+              "DocumentIndex": 3,
+              "Title": "GetImg.cs",
+              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\GetImg.cs",
+              "RelativeDocumentMoniker": "GetImage\\GetImg.cs",
+              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\GetImg.cs",
+              "RelativeToolTip": "GetImage\\GetImg.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAArwDUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T05:30:54.872Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.cs [\u8BBE\u8BA1]",
-              "DocumentMoniker": "E:\\DataSave\\Program\\visualstudio\\GetSaveImg\\GetImage\\Form1.cs",
-              "RelativeDocumentMoniker": "GetImage\\Form1.cs",
-              "ToolTip": "E:\\DataSave\\Program\\visualstudio\\GetImage\\Form1.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "..\\GetImage\\Form1.cs [\u8BBE\u8BA1]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T06:25:22.352Z"
+              "WhenOpened": "2025-12-09T06:37:13.053Z",
+              "EditorCaption": ""
             }
           ]
         },

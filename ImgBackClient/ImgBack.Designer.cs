@@ -1,6 +1,6 @@
 ﻿namespace ImgBackClient
 {
-    partial class Form1
+    partial class ImgBack
     {
         /// <summary>
         ///  Required designer variable.

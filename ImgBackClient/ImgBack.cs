@@ -7,11 +7,11 @@ using System.Windows.Forms;
 
 namespace ImgBackClient
 {
-    public partial class Form1 : Form
+    public partial class ImgBack : Form
     {
         private readonly string _backupSavePath = "D:\\ImageBackup";
         private const int SERVER_PORT = 7772;
-        public Form1()
+        public ImgBack()
         {
             InitializeComponent();
             server_port.Text = SERVER_PORT.ToString();
