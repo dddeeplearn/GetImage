@@ -1,0 +1,16 @@
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Debug\net8.0-windows\ImgBackClient.exe
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Debug\net8.0-windows\ImgBackClient.deps.json
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Debug\net8.0-windows\ImgBackClient.runtimeconfig.json
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Debug\net8.0-windows\ImgBackClient.dll
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Debug\net8.0-windows\ImgBackClient.pdb
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.Form1.resources
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.csproj.GenerateResource.cache
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.GeneratedMSBuildEditorConfig.editorconfig
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.AssemblyInfoInputs.cache
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.AssemblyInfo.cs
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.csproj.CoreCompileInputs.cache
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.dll
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\refint\ImgBackClient.dll
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.pdb
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ImgBackClient.genruntimeconfig.cache
+E:\DataSave\Program\visualstudio\ImgBackClient\obj\Debug\net8.0-windows\ref\ImgBackClient.dll

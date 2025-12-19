@@ -1,0 +1,5 @@
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Release\net8.0-windows\publish\ImgBackClient.exe
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Release\net8.0-windows\publish\ImgBackClient.dll
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Release\net8.0-windows\publish\ImgBackClient.deps.json
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Release\net8.0-windows\publish\ImgBackClient.runtimeconfig.json
+E:\DataSave\Program\visualstudio\ImgBackClient\bin\Release\net8.0-windows\publish\ImgBackClient.pdb
